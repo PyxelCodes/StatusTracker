@@ -1,0 +1,15 @@
+{
+  "name": "bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "@types/signale": "^1.4.7",
+    "typescript": "^5.5.2"
+  },
+  "dependencies": {
+    "aetherial": "^1.0.6",
+    "signale": "^1.4.0"
+  }
+}
