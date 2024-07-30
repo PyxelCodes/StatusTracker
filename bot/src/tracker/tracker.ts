@@ -13,6 +13,17 @@ export async function track(client: Shard) {
             if (activity.type === 6) continue; // weird new "chilling" activity etc.
             let start_time = Date.now();
 
+            if(activity.type === 3) continue; // watching -> doesnt have a activity.start_date
+            if(activity.type === 4) continue; // custom status
+            if(activity.id === "ec0b28a579ecb4bd") continue; // this random id is apparantly the bot status
+            if((activity as any).application_id === "307998818547531777") continue; // Medal.tv
+
+            if(!activity.timestamps?.start){
+                console.log("WARN -> No start time for activity:");
+                console.log(activity);
+                continue;
+            } 
+
             await User.updateOne(
                 { _id: presence.user.id },
                 {},

@@ -1,0 +1,13 @@
+networks:
+    st_network:
+        driver: bridge
+
+services:
+    bot:
+        build:
+            context: ./bot
+        restart: unless-stopped
+        networks:
+            - st_network
+        
+    
