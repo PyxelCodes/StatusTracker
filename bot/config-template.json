@@ -1,4 +1,4 @@
 {
-    "token": "",
-    "publicKey": ""
+    "token": "YOUR_BOT_TOKEN",
+    "mongo": "YOUR_MONGO_URI"
 }

@@ -1,9 +1,25 @@
-import Aetherial from 'aetherial';
+import { IntentBuilder, loadCommands, registerCommands, ShardingManager } from 'aetherial';
 import config from '../config.json';
 import signale from 'signale';
+import path from 'path';
 
-const client = new Aetherial.Client(config.token, config.publicKey);
+const sm = new ShardingManager(
+    config.token,
+    new IntentBuilder()
+        .addIntent('GUILDS')
+        .addIntent('GUILD_MESSAGES')
+        .addIntent('GUILD_PRESENCES')
+);
 
-client.on('ready', () => {
-    signale.success(`StatusTracker is ready!`);
-})
+sm.config({ file: path.join(__dirname, 'shard.js') });
+
+sm.spawn();
+
+
+
+if (process.argv.includes('--push')) {
+    let cmds = new Map<any,any>();
+    signale.info('Registering commands...');
+    loadCommands(cmds as any); // shenanigans
+    registerCommands(cmds as any, config.token);
+}
