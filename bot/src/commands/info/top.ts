@@ -35,6 +35,7 @@ export default {
 
         for (let activity of activities) {
             let emojiName = activity.name.normalize('NFC').replace(/ /gm, "").replace(/\-/gm, "")
+            if(emojiName == "TomClancy'sRainbowSixSiege") emojiName = "RainbowSixSiege";
             let emojiId: string = (emojis as Emojis)[emojiName];
             let emoji = emojiId ? `<:${emojiName}:${emojiId}> ` : '';
             embed.addField(`${emoji}${activity.name}`, `Duration: ${convertMs(activity.duration)}`);
