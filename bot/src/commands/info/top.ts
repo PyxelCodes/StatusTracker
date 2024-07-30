@@ -34,8 +34,9 @@ export default {
             .setTimestamp(Date.now());
 
         for (let activity of activities) {
-            let emojiId: string = (emojis as Emojis)[activity.name.normalize('NFC')]
-            let emoji = emojiId ? `<:${activity.name}:${emojiId}> ` : '';
+            let emojiName = activity.name.normalize('NFC').replace(/ /gm, "").replace(/\-/gm, "")
+            let emojiId: string = (emojis as Emojis)[emojiName];
+            let emoji = emojiId ? `<:${emojiName}:${emojiId}> ` : '';
             embed.addField(`${emoji}${activity.name}`, `Duration: ${convertMs(activity.duration)}`);
         }
 
