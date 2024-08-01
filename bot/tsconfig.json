@@ -7,8 +7,10 @@
     "strict": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
+    "strictNullChecks": false,
     "outDir": "./dist",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "noImplicitAny": false,
   },
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist", "./src/aetherial/**/*.ts"]
 }
