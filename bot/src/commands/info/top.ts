@@ -1,4 +1,4 @@
-import { Command, MessageEmbed } from 'aetherial';
+import { Command, MessageEmbed } from '../../aetherial/src';
 import Activity from '../../schemas/Activity';
 import convertMs from '../../utils/convertMs';
 import emojis from '../../emojis.json';

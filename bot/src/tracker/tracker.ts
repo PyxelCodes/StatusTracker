@@ -1,4 +1,4 @@
-import { Shard } from 'aetherial';
+import { Shard } from '../aetherial/src';
 import User from '../schemas/User';
 import Activity from '../schemas/Activity';
 

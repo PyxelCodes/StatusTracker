@@ -1,4 +1,4 @@
-import { IntentBuilder, loadCommands, registerCommands, ShardingManager } from 'aetherial';
+import { IntentBuilder, loadCommands, registerCommands, ShardingManager } from './aetherial/src';
 import config from '../config.json';
 import signale from 'signale';
 import path from 'path';

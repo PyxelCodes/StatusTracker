@@ -1,4 +1,4 @@
-import { loadCommands, Shard } from 'aetherial';
+import { loadCommands, Shard } from './aetherial/src';
 import config from '../config.json';
 import { track } from './tracker/tracker';
 import mongoose from 'mongoose';
