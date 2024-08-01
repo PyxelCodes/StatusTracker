@@ -8,6 +8,10 @@ const client = new Shard();
 client.on('shardReady', (shard) => {
     console.log(`Shard ${shard[0]} is ready!`);
 
+    client.wss.on('message', (data: any) => {
+        console.log(JSON.stringify(JSON.parse(data), null, 2));
+    });
+
     setInterval(() => {
         track(client);
     }, 1000 * 60 * 2);
@@ -34,6 +38,6 @@ client.on('interactionCreate', (interaction) => {
     }
 });
 
-mongoose.connect(config.mongo)
+mongoose.connect(config.mongo);
 
 client.login(config.token);
