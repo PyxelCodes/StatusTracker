@@ -1,0 +1,22 @@
+FROM golang:1.22.5-alpine3.20 AS build
+
+WORKDIR /crud
+COPY . .
+
+RUN go mod download
+EXPOSE 8080
+
+RUN go build -o /crud/backend .
+
+# Deploy stage
+FROM alpine:latest
+
+RUN addgroup -S nonroot && adduser -S nonroot -G nonroot
+WORKDIR /app
+ENV GIN_MODE=release
+COPY --from=build /crud/backend /app/backend
+COPY .env /app/.env
+EXPOSE 8080
+USER nonroot:nonroot
+
+ENTRYPOINT [ "/app/backend" ]
