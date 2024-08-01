@@ -1,0 +1,3 @@
+[submodule "bot/aetherial"]
+	path = bot/aetherial
+	url = https://github.com/pyxelcodes/aetherial.git
