@@ -31,15 +31,6 @@ export async function track(client: Shard) {
                 continue;
             }
 
-            // Upsert user update
-            bulkUserUpdates.push({
-                updateOne: {
-                    filter: { _id: presence.user.id },
-                    update: {},
-                    upsert: true
-                }
-            });
-
             const cacheKey = `${presence.user.id}-${activity.name}`;
             let act = activityCache.get(cacheKey);
 
@@ -82,7 +73,8 @@ export async function track(client: Shard) {
                 bulkUserUpdates.push({
                     updateOne: {
                         filter: { _id: presence.user.id },
-                        update: { $push: { activities: act._id } }
+                        update: { $push: { activities: act._id } },
+                        upsert: true
                     }
                 });
             } else {
