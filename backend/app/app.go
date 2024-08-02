@@ -29,6 +29,14 @@ func (a *App) Run() {
 
 	a.server.GET("/user/:id", func(c *gin.Context) {
 		id := c.Param("id")
+
+		if err := stmongo.ValidateID(id); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+
 		user := stmongo.FindUser(mongoc.Client, id)
 		activities := stmongo.FindActivities(mongoc.Client, id)
 

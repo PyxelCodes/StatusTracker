@@ -2,8 +2,10 @@ package stmongo
 
 import (
 	"context"
+	"errors"
 	"log"
 	"os"
+	"regexp"
 
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
@@ -43,6 +45,19 @@ func Close(m *Mongo) {
 		log.Fatalf("Error disconnecting from MongoDB: %v", err)
 	}
 	log.Println("Disconnected from MongoDB")
+}
+
+func ValidateID(id string) error {
+	if len(id) == 0 {
+		return errors.New("ID cannot be empty")
+	}
+
+	regexNumeric := regexp.MustCompile(`^\d+$`)
+	if !regexNumeric.MatchString(id) {
+		return errors.New("ID must be numeric")
+	}
+
+	return nil
 }
 
 func FindUser(client *mongo.Client, id string) bson.M {
