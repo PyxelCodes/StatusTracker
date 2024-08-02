@@ -27,9 +27,9 @@ COPY package.json yarn.lock /app/
 RUN npm install -g yarn
 RUN yarn install --frozen-lockfile
 RUN curl -sf https://gobinaries.com/tj/node-prune | sh
-RUN node-prune
 COPY . /app/
 RUN yarn build
+RUN node-prune
 
 FROM debian:stable-slim AS runtime
 WORKDIR /app
