@@ -6,7 +6,7 @@ import signale from 'signale';
 export async function track(client: Shard) {
     console.log('Tracking...');
 
-    if((client.wss as WebSocket).readyState === WebSocket.CLOSED) {
+    if((client.wss as WebSocket).readyState === 0x3) {
         console.log('WS connection closed, aborting tracking.');
         return;
     }
