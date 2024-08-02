@@ -3,14 +3,12 @@ import config from '../config.json';
 import { track } from './tracker/tracker';
 import mongoose from 'mongoose';
 
+process.env.NODE_ENV = 'development';
+
 const client = new Shard();
 
 client.on('shardReady', (shard) => {
     console.log(`Shard ${shard[0]} is ready!`);
-
-    client.wss.on('message', (data: any) => {
-        console.log(JSON.stringify(JSON.parse(data), null, 2));
-    });
 
     setInterval(() => {
         track(client);

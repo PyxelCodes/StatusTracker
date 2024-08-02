@@ -6,6 +6,11 @@ import signale from 'signale';
 export async function track(client: Shard) {
     console.log('Tracking...');
 
+    if((client.wss as WebSocket).CLOSED) {
+        console.log('WS connection closed, aborting tracking.');
+        return;
+    }
+
     const bulkUserUpdates = [];
     const bulkActivityUpdates = [];
     const activityCache = new Map();
