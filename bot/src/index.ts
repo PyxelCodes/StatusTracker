@@ -21,5 +21,5 @@ if (process.argv.includes('--push')) {
     let cmds = new Map<any,any>();
     signale.info('Registering commands...');
     loadCommands(cmds as any); // shenanigans
-    registerCommands(cmds as any, config.token);
+    registerCommands(cmds as any, config.token); // Global
 }
