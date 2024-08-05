@@ -16,3 +16,5 @@ services:
         restart: unless-stopped
         networks:
             - st_network
+        ports:
+            - "8080:8080"
