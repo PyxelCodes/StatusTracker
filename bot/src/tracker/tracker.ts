@@ -2,6 +2,7 @@ import { Shard } from '../aetherial/src';
 import User from '../schemas/User';
 import Activity from '../schemas/Activity';
 import signale from 'signale';
+import xfc_alias from '../utils/alias';
 
 export async function track(client: Shard) {
     console.log('Tracking...');
@@ -23,27 +24,29 @@ export async function track(client: Shard) {
             if (activity.type === 3) continue; // watching -> doesn't have a activity.start_date
             if (activity.type === 4) continue; // custom status
             if (activity.id === "ec0b28a579ecb4bd") continue; // this random id is apparently the bot status
-            if ((activity as any).application_id === "307998818547531777") continue; // Medal.tv
+            if ((activity as any).application_id === "307998818547531777" && !activity?.timestamps?.start) continue; // Medal.tv
+
+            let activityName = xfc_alias(activity.name);
 
             if (!activity.timestamps?.start) {
                 console.log("WARN -> No start time for activity:");
-                console.log(activity.name, ' -> ', (activity as any).application_id);
+                console.log(activityName, ' -> ', (activity as any).application_id);
                 continue;
             }
 
-            const cacheKey = `${presence.user.id}-${activity.name}`;
+            const cacheKey = `${presence.user.id}-${activityName}`;
             let act = activityCache.get(cacheKey);
 
             if (!act) {
                 act = await Activity.findOne({
                     id: presence.user.id,
-                    name: activity.name,
+                    name: activityName,
                 });
 
                 if (!act) {
                     act = {
                         id: presence.user.id,
-                        name: activity.name,
+                        name: activityName,
                         duration: 0,
                         last_tracked: 0,
                         new: true // Flag to indicate new activity
@@ -63,7 +66,7 @@ export async function track(client: Shard) {
                     insertOne: {
                         document: {
                             id: presence.user.id,
-                            name: activity.name,
+                            name: activityName,
                             duration,
                             last_tracked: Date.now(),
                         }
@@ -80,7 +83,7 @@ export async function track(client: Shard) {
             } else {
                 bulkActivityUpdates.push({
                     updateOne: {
-                        filter: { id: presence.user.id, name: activity.name },
+                        filter: { id: presence.user.id, name: activityName },
                         update: { $inc: { duration }, $set: { last_tracked: Date.now() } }
                     }
                 });
