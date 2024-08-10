@@ -63,8 +63,12 @@ func ValidateID(id string) error {
 func FindUser(client *mongo.Client, id string) bson.M {
 	coll := client.Database("production").Collection("users")
 
+	if err := ValidateID(id); err != nil {
+		return bson.M{"error": err.Error()}
+	}
+
 	var result bson.M
-	err := coll.FindOne(context.TODO(), bson.D{{Key: "_id", Value: ValidateID(id)}}, options.FindOne().SetProjection(bson.D{{Key: "__v", Value: 0}})).Decode(&result)
+	err := coll.FindOne(context.TODO(), bson.D{{Key: "_id", Value: id}}, options.FindOne().SetProjection(bson.D{{Key: "__v", Value: 0}})).Decode(&result)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -75,7 +79,11 @@ func FindUser(client *mongo.Client, id string) bson.M {
 func FindActivities(client *mongo.Client, id string) []bson.M {
 	coll := client.Database("production").Collection("activities")
 
-	cursor, err := coll.Find(context.TODO(), bson.D{{Key: "id", Value: ValidateID(id)}}, options.Find().SetProjection(bson.D{{Key: "__v", Value: 0}, {Key: "_id", Value: 0}}))
+	if err := ValidateID(id); err != nil {
+		return []bson.M{{"error": err.Error()}}
+	}
+
+	cursor, err := coll.Find(context.TODO(), bson.D{{Key: "id", Value: id}}, options.Find().SetSort(bson.D{{Key: "duration", Value: -1}}).SetProjection(bson.D{{Key: "__v", Value: 0}, {Key: "_id", Value: 0}}))
 	if err != nil {
 		log.Fatal(err)
 	}
