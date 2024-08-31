@@ -49,6 +49,8 @@ export async function track(client: Shard) {
                         name: activityName,
                         duration: 0,
                         last_tracked: 0,
+                        timesPlayed: 1,
+                        currentActivityStartTimestamp: 0,
                         new: true // Flag to indicate new activity
                     };
                 }
@@ -69,6 +71,8 @@ export async function track(client: Shard) {
                             name: activityName,
                             duration,
                             last_tracked: Date.now(),
+                            currentActivityStartTimestamp: activity.timestamps.start,
+                            timesPlayed: 1,
                         }
                     }
                 });
@@ -81,10 +85,20 @@ export async function track(client: Shard) {
                     }
                 });
             } else {
+
+                let upstream = { $inc: { duration }, $set: { last_tracked: Date.now() } }
+
+                // same session
+                if(act.currentActivityStartTimestamp != activity.timestamps.start) {
+                    upstream.$inc.timesPlayed++;
+                }
+
+                upstream.$set.currentActivityStartTimestamp = act.timestamps.start;
+
                 bulkActivityUpdates.push({
                     updateOne: {
                         filter: { id: presence.user.id, name: activityName },
-                        update: { $inc: { duration }, $set: { last_tracked: Date.now() } }
+                        update: upstream
                     }
                 });
             }
