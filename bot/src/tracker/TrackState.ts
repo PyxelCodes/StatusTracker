@@ -170,11 +170,11 @@ export class TrackState {
         }
 
         upstream.$set.last_sessionID = sessionID;
+        upstream.$set.last_started = last_started;
 
         this.bulkActivityQueue.push({
             updateOne: {
                 filter: { id: this.presence.user.id, name: activityName },
-                last_started: last_started,
                 update: upstream,
             },
         });
@@ -228,4 +228,5 @@ interface UpstreamInc {
 interface UpstreamSet {
     last_tracked: number;
     last_sessionID?: string;
+    last_started?: number;
 }
