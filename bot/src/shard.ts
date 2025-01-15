@@ -30,7 +30,7 @@ client.on('interactionCreate', async (interaction) => {
         { name: `Command: ${interaction.commandName}`, op: 'interaction' },
         async (interactionSpan) => {
             try {
-                interaction.user = { id: interaction.data.member.user.id };
+                interaction.user = { id: interaction.data.member.user.id, username: interaction.data.member.user.username };
 
                 const command = client.client.commands.get(
                     interaction.commandName
