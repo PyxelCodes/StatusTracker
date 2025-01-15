@@ -1,5 +1,6 @@
-import { Command, MessageEmbed } from '../../aetherial/src';
+import { Command, MessageEmbed, WebhookClient } from '../../aetherial/src';
 import User from '../../schemas/User';
+import config from '../../../config.json'
 
 export default {
     name: `deactivate`,
@@ -24,7 +25,7 @@ export default {
         }
 
         await User.updateOne({ _id: interaction.user.id }, { tracking: false });
-        return interaction.reply({
+        interaction.reply({
             embeds: [
                 new MessageEmbed()
                     .setColor(0x924dbf)
@@ -33,5 +34,15 @@ export default {
                     ),
             ],
         });
+
+        new WebhookClient(config.logWebhook).send({
+            embeds: [
+                new MessageEmbed()
+                    .setColor(0xD84040)
+                    .setDescription(
+                        `${interaction.user.username} has stopped tracking their activities`
+                    ),
+            ]
+        })
     },
 } as Command;
