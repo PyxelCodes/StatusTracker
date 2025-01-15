@@ -37,7 +37,7 @@ export default {
             ],
         });
 
-        new WebhookClient(config.logWebhook).send({
+        new WebhookClient({url: config.logWebhook }).send({
             embeds: [
                 new MessageEmbed()
                     .setColor(0x924dbf)
