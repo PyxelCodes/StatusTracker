@@ -56,7 +56,9 @@ export class TrackState {
                 activity.session_id,
                 storedActivity.last_sessionID,
                 duration,
-                activityName
+                activityName,
+                storedActivity.last_started,
+                activity.timestamps.start
             );
         }
     }
@@ -99,6 +101,7 @@ export class TrackState {
                     name: xfc_alias(activity.name),
                     duration: 0,
                     last_tracked: 0,
+                    last_started: activity.timestamps.start,
                     timesPlayed: 1,
                     last_sessionID: activity.session_id,
                     new: true, // Flag to indicate new activity
@@ -131,6 +134,7 @@ export class TrackState {
                     duration,
                     last_tracked: Date.now(),
                     last_sessionID: sessionID,
+                    last_started: Date.now(),
                     timesPlayed: 1,
                 },
             },
@@ -149,7 +153,9 @@ export class TrackState {
         sessionID: string,
         last_sessionID: string,
         duration: number,
-        activityName: string
+        activityName: string,
+        last_started_stored: number,
+        last_started: number
     ) {
         let upstream = {
             $inc: { duration } as UpstreamInc,
@@ -159,6 +165,8 @@ export class TrackState {
         // same session
         if (last_sessionID !== sessionID) {
             upstream.$inc.timesPlayed = 1;
+        } else if(last_started_stored !== last_started) {
+            upstream.$inc.timesPlayed = 1;
         }
 
         upstream.$set.last_sessionID = sessionID;
@@ -166,6 +174,7 @@ export class TrackState {
         this.bulkActivityQueue.push({
             updateOne: {
                 filter: { id: this.presence.user.id, name: activityName },
+                last_started: last_started,
                 update: upstream,
             },
         });
@@ -206,6 +215,7 @@ interface StoredActivity {
     duration: number;
     last_tracked: number;
     last_sessionID: string;
+    last_started: number;
     timesPlayed: number;
     new?: boolean;
 }
