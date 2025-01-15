@@ -16,10 +16,16 @@ interface UserInfoCardProps {
     activities: Activity[] | null;
 }
 
-export default function UserInfoCard({ user, apiUser, activities }: UserInfoCardProps) {
-    const totaltp = activities ? activities.reduce((acc, cur) => acc + cur.duration, 0) : 0;
+export default function UserInfoCard({
+    user,
+    apiUser,
+    activities,
+}: UserInfoCardProps) {
+    const totaltp = activities
+        ? activities.reduce((acc, cur) => acc + cur.duration, 0)
+        : 0;
     return (
-        <Card className="bg-white shadow-xl">
+        <Card className="bg-white dark:bg-[#111827] shadow-xl">
             <CardHeader className="flex flex-row items-center justify-between space-x-4 pb-2">
                 <div className="flex flex-row items-center space-x-4">
                     <Image
@@ -31,17 +37,17 @@ export default function UserInfoCard({ user, apiUser, activities }: UserInfoCard
                         alt="Profile Image"
                         width={80}
                         height={80}
-                        className="rounded-full border-4 border-indigo-500"
+                        className="rounded-full border-4 border-purple-500"
                     />
                     <div>
-                        <CardTitle className="text-2xl font-bold text-gray-800">
+                        <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">
                             Welcome,{' '}
                             {user
                                 ? user.externalAccounts[0].firstName
                                 : "You're not logged in"}
                             !
                         </CardTitle>
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
                             Discord ID:{' '}
                             {user ? user.externalAccounts[0].externalId : '-'}
                         </p>
@@ -51,34 +57,34 @@ export default function UserInfoCard({ user, apiUser, activities }: UserInfoCard
                     <SignOutButton />
                 </SignedIn>
                 <SignedOut>
-                    <SignInButton mode={"modal"}/>
+                    <SignInButton mode={'modal'} />
                 </SignedOut>
             </CardHeader>
             <CardContent>
                 <div className="grid grid-cols-2 gap-4 mt-4">
-                    <div className="bg-indigo-100 p-4 rounded-lg">
-                        <p className="text-sm font-semibold text-indigo-800">
+                    <div className="bg-purple-100 dark:bg-purple-900/50 p-4 rounded-lg">
+                        <p className="text-sm font-semibold text-purple-800 dark:text-purple-200">
                             Time played
                         </p>
-                        <p className="text-lg text-indigo-600">
+                        <p className="text-lg text-purple-600 dark:text-purple-300">
                             {apiUser ? formatDuration(totaltp) : '-'}
                         </p>
                     </div>
-                    <div className="bg-purple-100 p-4 rounded-lg">
-                        <p className="text-sm font-semibold text-purple-800">
+                    <div className="bg-indigo-100 dark:bg-indigo-900/50 p-4 rounded-lg">
+                        <p className="text-sm font-semibold text-indigo-800 dark:text-indigo-200">
                             Joined
                         </p>
-                        <p className="text-lg text-purple-600">
+                        <p className="text-lg text-indigo-600 dark:text-indigo-300">
                             {apiUser
                                 ? new Date(apiUser.joined).toLocaleDateString()
                                 : '-'}
                         </p>
                     </div>
-                    <div className="bg-pink-100 p-4 rounded-lg">
-                        <p className="text-sm font-semibold text-pink-800">
+                    <div className="bg-violet-100 dark:bg-violet-900/50 p-4 rounded-lg">
+                        <p className="text-sm font-semibold text-violet-800 dark:text-violet-200">
                             Tracking
                         </p>
-                        <p className="text-lg text-pink-600">
+                        <p className="text-lg text-violet-600 dark:text-violet-300">
                             {apiUser
                                 ? apiUser.tracking
                                     ? 'Active'
@@ -86,11 +92,11 @@ export default function UserInfoCard({ user, apiUser, activities }: UserInfoCard
                                 : '-'}
                         </p>
                     </div>
-                    <div className="bg-blue-100 p-4 rounded-lg">
-                        <p className="text-sm font-semibold text-blue-800">
+                    <div className="bg-fuchsia-100 dark:bg-fuchsia-900/50 p-4 rounded-lg">
+                        <p className="text-sm font-semibold text-fuchsia-800 dark:text-fuchsia-200">
                             Activities
                         </p>
-                        <p className="text-lg text-blue-600">
+                        <p className="text-lg text-fuchsia-600 dark:text-fuchsia-300">
                             {activities ? activities.length : '-'}
                         </p>
                     </div>

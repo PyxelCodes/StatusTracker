@@ -27,35 +27,47 @@ function parseEmoji(activity: string) {
     return emojiName;
 }
 
-// https://cdn.discordapp.com/emojis/757181674093150278.webp?size=240
-
 export default async function ActivityList({ activities }: ActivityListProps) {
-    const emojis = await axios
-        .get(`${process.env.NEXT_PUBLIC_API_BASE}/emojis`)
+    const emojis = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_BASE}/emojis`
+    );
 
     return (
-        <Card className="bg-white shadow-xl">
+        <Card className="bg-white dark:bg-[#111827] shadow-xl">
             <CardHeader>
-                <CardTitle className="text-2xl font-bold text-gray-800">
+                <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">
                     Recent Activities
                 </CardTitle>
             </CardHeader>
             <CardContent>
                 <Table>
                     <TableHeader>
-                        <TableRow>
-                            <TableHead className="w-[150px]">Name</TableHead>
-                            <TableHead>Duration</TableHead>
-                            <TableHead>Last Tracked</TableHead>
-                            <TableHead>Times Played</TableHead>
+                        <TableRow className="border-gray-200 dark:border-gray-700">
+                            <TableHead className="w-[150px] text-gray-700 dark:text-gray-300">
+                                Name
+                            </TableHead>
+                            <TableHead className="text-gray-700 dark:text-gray-300">
+                                Duration
+                            </TableHead>
+                            <TableHead className="text-gray-700 dark:text-gray-300">
+                                Last Tracked
+                            </TableHead>
+                            <TableHead className="text-gray-700 dark:text-gray-300">
+                                Times Played
+                            </TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {activities ? (
                             activities.map((activity) => (
-                                <TableRow key={activity.id + activity.name}>
-                                    <TableCell className="font-medium flex flex-row items-center">
-                                        {emojis.data[parseEmoji(activity.name)] && (
+                                <TableRow
+                                    key={activity.id + activity.name}
+                                    className="border-gray-200 dark:border-gray-700"
+                                >
+                                    <TableCell className="font-medium text-gray-900 dark:text-white flex flex-row items-center">
+                                        {emojis.data[
+                                            parseEmoji(activity.name)
+                                        ] && (
                                             <Image
                                                 alt={activity.name}
                                                 width={20}
@@ -72,10 +84,10 @@ export default async function ActivityList({ activities }: ActivityListProps) {
                                         )}
                                         {activity.name}
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell className="text-gray-700 dark:text-gray-300">
                                         {formatDuration(activity.duration)}
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell className="text-gray-700 dark:text-gray-300">
                                         {new Date(
                                             activity.last_tracked
                                         ).toLocaleDateString('en-GB', {
@@ -84,14 +96,17 @@ export default async function ActivityList({ activities }: ActivityListProps) {
                                             year: '2-digit',
                                         })}
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell className="text-gray-700 dark:text-gray-300">
                                         {activity.timesPlayed || 'N/A'}
                                     </TableCell>
                                 </TableRow>
                             ))
                         ) : (
                             <TableRow>
-                                <TableCell colSpan={4} className="text-center">
+                                <TableCell
+                                    colSpan={4}
+                                    className="text-center text-gray-500 dark:text-gray-400"
+                                >
                                     No activities found
                                 </TableCell>
                             </TableRow>
