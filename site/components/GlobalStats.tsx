@@ -1,8 +1,8 @@
-'use client'
+'use client';
 
 import { GlobalActivity } from '@/types';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Bar, Doughnut } from 'react-chartjs-2';
 import {
     Chart as ChartJS,
@@ -22,7 +22,7 @@ ChartJS.register(
     Title,
     Tooltip,
     Legend,
-    ArcElement,
+    ArcElement
 );
 
 interface GlobalStatsProps {
@@ -61,42 +61,66 @@ export default function GlobalStats({ activities }: GlobalStatsProps) {
                 position: 'right' as const,
                 labels: {
                     font: {
-                        size: 14
-                    }
-                }
+                        size: 14,
+                    },
+                    color: 'rgb(156, 163, 175)',
+                },
             },
             title: {
                 display: true,
                 text: 'Top 15 Most Popular Activities',
                 font: {
-                    size: 16
-                }
-            }
+                    size: 16,
+                },
+                color: 'rgb(156, 163, 175)',
+            },
+            tooltip: {
+                titleFont: {
+                    size: 12,
+                },
+                bodyFont: {
+                    size: 11,
+                },
+                boxPadding: 4,
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                titleColor: 'rgb(229, 231, 235)',
+                bodyColor: 'rgb(229, 231, 235)',
+            },
         },
         scales: {
             y: {
                 ticks: {
                     font: {
-                        size: 12
-                    }
-                }
+                        size: 12,
+                    },
+                    color: 'rgb(156, 163, 175)',
+                },
+                grid: {
+                    color: 'rgba(156, 163, 175, 0.1)',
+                },
             },
             x: {
                 ticks: {
                     font: {
-                        size: 12
-                    }
-                }
-            }
-        }
+                        size: 12,
+                    },
+                    color: 'rgb(156, 163, 175)',
+                },
+                grid: {
+                    color: 'rgba(156, 163, 175, 0.1)',
+                },
+            },
+        },
     };
 
     const chartData = {
-        labels: topActivities.map(a => a._id),
+        labels: topActivities.map((a) => a._id),
         datasets: [
             {
                 label: 'Total Hours',
-                data: topActivities.map(a => a.total_duration / (1000 * 60 * 60)),
+                data: topActivities.map(
+                    (a) => a.total_duration / (1000 * 60 * 60)
+                ),
                 backgroundColor: colors,
                 borderWidth: 2,
             },
@@ -104,9 +128,11 @@ export default function GlobalStats({ activities }: GlobalStatsProps) {
     };
 
     return (
-        <Card className="bg-white shadow-xl mt-8">
+        <Card className="bg-white dark:bg-[#111827] shadow-xl mt-8">
             <CardHeader>
-                <CardTitle className="text-2xl font-bold text-gray-800">Global Activity Statistics</CardTitle>
+                <CardTitle className="text-2xl font-bold">
+                    Global Activity Statistics
+                </CardTitle>
             </CardHeader>
             <CardContent>
                 <Tabs defaultValue="bar" className="w-full">

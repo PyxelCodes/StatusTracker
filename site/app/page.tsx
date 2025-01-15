@@ -1,10 +1,8 @@
-import ActivityCharts from '@/components/ActivityCharts';
-import ActivityList from '@/components/ActivityList';
-import UserInfoCard from '@/components/UserInfoCard';
-import GlobalStats from '@/components/GlobalStats';
 import { ApiResponse, GlobalStats as GlobalStatsType } from '@/types';
 import { SignInButton } from '@clerk/nextjs';
 import { currentUser } from '@clerk/nextjs/server';
+import UserStats from './_components/UserStats';
+import { Button } from '@/components/ui/button';
 import axios from 'axios';
 
 async function getData(userId: string | null): Promise<ApiResponse | null> {
@@ -30,6 +28,29 @@ export default async function Home() {
     try {
         const user = await currentUser();
 
+        if (!user) {
+            return (
+                <main className="min-h-screen flex flex-col items-center justify-center p-8 bg-gradient-to-br from-purple-500 to-indigo-600 dark:from-purple-800 dark:to-indigo-900 animate-gradient">
+                    <div className="bg-white dark:bg-[#111827] p-8 rounded-lg shadow-xl text-center max-w-2xl w-full">
+                        <h1 className="text-4xl font-bold mb-6 text-gray-900 dark:text-white">
+                            Welcome to StatusTracker
+                        </h1>
+                        <p className="mb-8 text-gray-600 dark:text-gray-300 text-lg">
+                            Track your activities on Discord, and gain more data on your useage
+                        </p>
+                        <SignInButton>
+                            <Button
+                                size="lg"
+                                className="bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-800 text-white font-semibold py-2 px-6 rounded-md transition duration-300"
+                            >
+                                Get Started
+                            </Button>
+                        </SignInButton>
+                    </div>
+                </main>
+            );
+        }
+
         try {
             const [data, globalStats] = await Promise.all([
                 getData(user ? user.externalAccounts[0].externalId : null),
@@ -37,22 +58,13 @@ export default async function Home() {
             ]);
 
             return (
-                <main className="min-h-screen p-8 bg-gradient-to-br from-[#7338A0] to-[#0F0529] animate-gradient-x">
+                <main className="min-h-screen p-8 bg-gradient-to-br from-purple-500 to-indigo-600 dark:from-purple-800 dark:to-indigo-900 animate-gradient">
                     <div className="max-w-7xl mx-auto">
-                        <UserInfoCard
+                        <UserStats
                             user={user}
-                            apiUser={data ? data.user : null}
-                            activities={data ? data.activities : null}
+                            data={data}
+                            globalStats={globalStats}
                         />
-                        <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
-                            <ActivityList
-                                activities={data ? data.activities : null}
-                            />
-                            <ActivityCharts
-                                activities={data ? data.activities : null}
-                            />
-                        </div>
-                        <GlobalStats activities={globalStats.activities} />
                     </div>
                 </main>
             );
@@ -60,12 +72,12 @@ export default async function Home() {
             console.error('Error fetching data:', error);
 
             return (
-                <main className="flex min-h-screen flex-col items-center justify-center p-8 bg-gradient-to-br from-[#7338A0] to-[#0F0529] animate-gradient-x">
-                    <div className="bg-white p-8 rounded-lg shadow-xl">
-                        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
+                <main className="flex min-h-screen flex-col items-center justify-center p-8 bg-gradient-to-br from-purple-500 to-indigo-600 dark:from-purple-800 dark:to-indigo-900 animate-gradient">
+                    <div className="bg-white dark:bg-[#111827] p-8 rounded-lg shadow-xl">
+                        <h1 className="text-3xl font-bold mb-6 text-center text-gray-900 dark:text-white">
                             Oops! Something went wrong
                         </h1>
-                        <p className="mb-6 text-center text-gray-600">
+                        <p className="mb-6 text-center text-gray-600 dark:text-gray-300">
                             Failed to fetch remote data
                         </p>
                     </div>
@@ -75,18 +87,18 @@ export default async function Home() {
     } catch (error) {
         console.error('Error fetching user:', error);
         return (
-            <main className="flex min-h-screen flex-col items-center justify-center p-8 bg-gradient-to-br from-[#7338A0] to-[#0F0529] animate-gradient-x">
-                <div className="bg-white p-8 rounded-lg shadow-xl">
-                    <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
+            <main className="flex min-h-screen flex-col items-center justify-center p-8 bg-gradient-to-br from-purple-500 to-indigo-600 dark:from-purple-800 dark:to-indigo-900 animate-gradient">
+                <div className="bg-white dark:bg-[#111827] p-8 rounded-lg shadow-xl">
+                    <h1 className="text-3xl font-bold mb-6 text-center text-gray-900 dark:text-white">
                         Oops! Something went wrong
                     </h1>
-                    <p className="mb-6 text-center text-gray-600">
+                    <p className="mb-6 text-center text-gray-600 dark:text-gray-300">
                         Please try signing in again
                     </p>
                     <SignInButton mode="modal">
-                        <button className="w-full bg-indigo-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-indigo-700 transition duration-300">
+                        <Button className="w-full bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-800 text-white font-semibold py-2 px-4 rounded-md transition duration-300">
                             Sign In
-                        </button>
+                        </Button>
                     </SignInButton>
                 </div>
             </main>

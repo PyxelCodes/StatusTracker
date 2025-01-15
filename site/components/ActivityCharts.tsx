@@ -36,14 +36,16 @@ interface ActivityChartsProps {
 export default function ActivityCharts({ activities }: ActivityChartsProps) {
     if (!activities) {
         return (
-            <Card className="bg-white shadow-xl">
+            <Card className="bg-white dark:bg-[#111827] shadow-xl">
                 <CardHeader>
-                    <CardTitle className="text-2xl font-bold text-gray-800">
+                    <CardTitle className="text-2xl font-bold">
                         Activity Analytics
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="h-[200px] flex items-center justify-center">
-                    <p className="text-gray-500 text-lg">Sign in to view your activity analytics</p>
+                    <p className="text-muted-foreground text-lg">
+                        Sign in to view your activity analytics
+                    </p>
                 </CardContent>
             </Card>
         );
@@ -66,6 +68,7 @@ export default function ActivityCharts({ activities }: ActivityChartsProps) {
                     font: {
                         size: 12,
                     },
+                    color: 'rgb(156, 163, 175)',
                     boxWidth: 15,
                     padding: 10,
                 },
@@ -78,6 +81,9 @@ export default function ActivityCharts({ activities }: ActivityChartsProps) {
                     size: 11,
                 },
                 boxPadding: 4,
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                titleColor: 'rgb(229, 231, 235)',
+                bodyColor: 'rgb(229, 231, 235)',
             },
         },
         scales: {
@@ -86,7 +92,11 @@ export default function ActivityCharts({ activities }: ActivityChartsProps) {
                     font: {
                         size: 11,
                     },
+                    color: 'rgb(156, 163, 175)',
                     maxTicksLimit: 8,
+                },
+                grid: {
+                    color: 'rgba(156, 163, 175, 0.1)',
                 },
             },
             x: {
@@ -94,8 +104,12 @@ export default function ActivityCharts({ activities }: ActivityChartsProps) {
                     font: {
                         size: 11,
                     },
+                    color: 'rgb(156, 163, 175)',
                     maxRotation: 45,
                     minRotation: 45,
+                },
+                grid: {
+                    color: 'rgba(156, 163, 175, 0.1)',
                 },
             },
         },
@@ -140,9 +154,9 @@ export default function ActivityCharts({ activities }: ActivityChartsProps) {
     };
 
     return (
-        <Card className="bg-white shadow-xl">
+        <Card className="bg-white dark:bg-[#111827] shadow-xl">
             <CardHeader>
-                <CardTitle className="text-2xl font-bold text-gray-800">
+                <CardTitle className="text-2xl font-bold">
                     Activity Analytics
                 </CardTitle>
             </CardHeader>
