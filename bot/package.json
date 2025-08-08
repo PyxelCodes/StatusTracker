@@ -9,7 +9,7 @@
     "typescript": "^5.5.2"
   },
   "scripts": {
-    "build": "tsc && yarn sentry:sourcemaps",
+    "build": "tsc",
     "start": "yarn build && node dist/index.js",
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org statustracker --project st ./dist && sentry-cli sourcemaps upload --org statustracker --project st ./dist"
   },
