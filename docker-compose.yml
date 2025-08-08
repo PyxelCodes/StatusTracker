@@ -24,3 +24,14 @@ services:
             - st_network
         ports:
             - "8080:8080"
+
+    nginx:
+        image: nginx:stable-alpine
+        restart: unless-stopped
+        ports:
+            - '443:443'
+        volumes:
+            - ./nginx.conf:/etc/nginx/nginx.conf
+            - /etc/letsencrypt:/etc/letsencrypt
+        networks:
+            - st_network
