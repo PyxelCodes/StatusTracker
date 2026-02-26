@@ -25,6 +25,7 @@ ENV PATH      $NVM_DIR/versions/node/$NODE_VERSION/bin:$PATH
 
 COPY package.json yarn.lock /app/
 RUN npm install -g yarn
+RUN corepack enable
 RUN yarn install --frozen-lockfile
 RUN curl -sf https://gobinaries.com/tj/node-prune | sh
 COPY . /app/
