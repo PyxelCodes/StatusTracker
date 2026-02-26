@@ -23,7 +23,8 @@ RUN /bin/bash -c "source $NVM_DIR/nvm.sh && nvm install $NODE_VERSION && nvm use
 ENV NODE_PATH $NVM_DIR/versions/node/$NODE_VERSION/lib/node_modules
 ENV PATH      $NVM_DIR/versions/node/$NODE_VERSION/bin:$PATH
 
-COPY package.json yarn.lock /app/
+COPY package.json yarn.lock .yarnrc.yml /app/
+COPY .yarn /app/.yarn
 RUN npm install -g yarn
 RUN corepack enable
 RUN yarn install --frozen-lockfile
