@@ -1,5 +1,4 @@
-import { Command, MessageEmbed } from "../../aetherial/src"
-import { ShardInteraction } from "../../aetherial/src/sharding/ShardInteraction";
+import { Command, MessageEmbed, ShardInteraction } from "aetherial";
 
 export default {
     name: 'ping',

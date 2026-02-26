@@ -19,9 +19,10 @@
     "@sentry/profiling-node": "^8.47.0",
     "@sentry/tracing": "^7.120.3",
     "@types/axios": "^0.14.4",
-    "aetherial": "^1.2.9",
-    "axios": "^1.7.9",
-    "mongoose": "^8.5.1",
+    "aetherial": "^1.2.10",
+    "axios": "^1.13.5",
+    "mongoose": "^9.2.2",
     "signale": "^1.4.0"
-  }
+  },
+  "packageManager": "yarn@4.12.0"
 }

@@ -1,4 +1,4 @@
-import { Command, MessageEmbed, WebhookClient } from '../../aetherial/src';
+import { Command, MessageEmbed, WebhookClient } from 'aetherial';
 import User from '../../schemas/User';
 import config from '../../../config.json';
 

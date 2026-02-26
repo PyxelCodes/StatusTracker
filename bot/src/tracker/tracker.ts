@@ -1,5 +1,5 @@
 import signale from 'signale';
-import { Shard } from '../aetherial/src';
+import { Shard } from 'aetherial';
 import { TrackState } from './TrackState';
 import User from '../schemas/User';
 import Activity from '../schemas/Activity';

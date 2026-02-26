@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/node';
-import { Command, MessageEmbed } from '../../aetherial/src';
+import { Command, MessageEmbed } from 'aetherial';
 import Activity from '../../schemas/Activity';
 import convertMs from '../../utils/convertMs';
 import activityView from '../../views/activity';

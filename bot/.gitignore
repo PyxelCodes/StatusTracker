@@ -5,5 +5,5 @@ dist
 
 # Sentry Config File
 .sentryclirc
-
+.yarn/install-state.gz
 emojis.json

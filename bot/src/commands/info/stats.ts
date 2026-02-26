@@ -1,7 +1,7 @@
-import { Command, MessageEmbed, Shard } from '../../aetherial/src';
+import { Command, MessageEmbed, Shard } from 'aetherial';
 import Activity from '../../schemas/Activity';
 import User from '../../schemas/User';
-import aetherialPKG from '../../aetherial/package.json';
+import aetherialPKG from 'aetherial/package.json';
 
 export default {
     name: 'stats',

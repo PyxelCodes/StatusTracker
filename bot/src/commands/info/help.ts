@@ -1,4 +1,4 @@
-import { Command, MessageEmbed } from '../../aetherial/src';
+import { Command, MessageEmbed } from 'aetherial';
 
 export default {
     name: `help`,
