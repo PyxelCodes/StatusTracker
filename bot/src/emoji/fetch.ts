@@ -1,5 +1,6 @@
 import axios from 'axios';
 import config from '../../config.json';
+import { logger } from '../logger';
 
 async function getRemoteEmojis(clientId: string) {
     let remote = await axios.get(
@@ -7,7 +8,7 @@ async function getRemoteEmojis(clientId: string) {
         { headers: { Authorization: `Bot ${config.token}` } }
     );
     if (!remote.data) {
-        console.log('Failed to fetch remote emojis');
+        logger.scope(`Emoji`).error('Failed to fetch remote emojis');
     }
     return remote.data;
 }

@@ -1,3 +1,4 @@
+import { logger } from '../logger';
 import Activity from '../schemas/Activity';
 import xfc_alias from '../utils/alias';
 
@@ -16,7 +17,6 @@ export class TrackState {
         bulkActivityQueue: any[],
         bulkUserQueue: any[]
     ) {
-        
         this.presence = presence;
         this.activityCache = activityCache;
         this.bulkActivityQueue = bulkActivityQueue;
@@ -30,8 +30,12 @@ export class TrackState {
                 if (!this.isCompatible(activity)) continue;
                 await this.calculateActivity(activity);
             } catch (error) {
-                console.log('ERROR -> Activity:', activity.name);
-                console.log(error);
+                logger
+                    .scope('Tracker')
+                    .error(
+                        `Error calculating activity for user ${this.presence.user.id}:`,
+                        error
+                    );
             }
         }
     }
@@ -76,13 +80,14 @@ export class TrackState {
 
     private validateTimestamp(activity: Activity) {
         if (!activity.timestamps?.start) {
-            console.log('WARN -> No start time for activity:');
-            console.log(
-                activity.name,
-                ' -> ',
-                (activity as any).application_id
-            );
-            return;
+            logger
+                .scope('Tracker')
+                .warn(
+                    `No start time for activity: ${
+                        activity.name
+                    } (Application ID: ${(activity as any).application_id})`
+                );
+            return false;
         }
         return true;
     }
@@ -165,7 +170,7 @@ export class TrackState {
         // same session
         if (last_sessionID !== sessionID) {
             upstream.$inc.timesPlayed = 1;
-        } else if(last_started_stored !== last_started) {
+        } else if (last_started_stored !== last_started) {
             upstream.$inc.timesPlayed = 1;
         }
 

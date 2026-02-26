@@ -5,13 +5,14 @@ import { track } from './tracker/tracker';
 import mongoose from 'mongoose';
 import * as Sentry from '@sentry/node';
 import User from './schemas/User';
+import { logger } from './logger';
 
 process.env.NODE_ENV = 'development';
 
 const client = new Shard();
 
 client.on('shardReady', (shard) => {
-    console.log(`Shard ${shard[0]} is ready!`);
+    logger.scope(`Shard ${shard[0]}`).success(`Ready!`);
 
     // @ts-ignore
     //client.updatePresence({ status: 'online', name: 'Tracking Presences' });

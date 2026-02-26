@@ -3,6 +3,7 @@ import config from '../config.json';
 import signale from 'signale';
 import path from 'path';
 import './emoji/manager';
+import { logger } from './logger';
 
 const sm = new ShardingManager(
     config.token,
@@ -20,7 +21,7 @@ sm.spawn();
 
 if (process.argv.includes('--push')) {
     let cmds = new Map<any,any>();
-    signale.info('Registering commands...');
+    logger.scope('CmdReg').info('Registering commands...');
     loadCommands(cmds as any); // shenanigans
     registerCommands(cmds as any, config.token); // Global
 }
