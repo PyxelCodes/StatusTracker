@@ -8,7 +8,6 @@ import User from './schemas/User';
 import { logger } from './logger';
 
 process.env.NODE_ENV = 'development';
-process.env['aetherial-debug'] = `true`
 
 const client = new Shard();
 
