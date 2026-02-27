@@ -997,9 +997,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"aetherial@npm:^1.2.17":
-  version: 1.2.17
-  resolution: "aetherial@npm:1.2.17"
+"aetherial@npm:^1.2.18":
+  version: 1.2.18
+  resolution: "aetherial@npm:1.2.18"
   dependencies:
     "@fastify/cors": "npm:^11.2.0"
     "@fastify/express": "npm:^4.0.4"
@@ -1011,7 +1011,7 @@ __metadata:
     signale: "npm:^1.4.0"
     tweetnacl: "npm:^1.0.3"
     ws: "npm:^8.18.0"
-  checksum: 10c0/51233a8f8775c82bfc22a8625ece0dc12311a77f6b8f6823c81c7a13583095c0c65d8d3d714d4e859cfa5dfa7c8bd8b48937f4af234b56f1b1be68d356700e40
+  checksum: 10c0/04d8b4b586489e94e111e1019a51812ce8be932579db540b81f2bc8039ba895b20f08d317279d6f3dbbc74ea372059e4dd4149f91296110a7b24175f1d77a084
   languageName: node
   linkType: hard
 
@@ -1146,7 +1146,7 @@ __metadata:
     "@types/axios": "npm:^0.14.4"
     "@types/node": "npm:^20.14.9"
     "@types/signale": "npm:^1.4.7"
-    aetherial: "npm:^1.2.17"
+    aetherial: "npm:^1.2.18"
     axios: "npm:^1.13.5"
     mongoose: "npm:^9.2.2"
     signale: "npm:^1.4.0"
